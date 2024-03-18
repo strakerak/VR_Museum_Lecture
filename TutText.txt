@@ -1,0 +1,28 @@
+First thing I did was create a Unity project with the 3d URP stuff
+
+Second was to make sure the packages were installed (here is the tip to do that)
+- first, you go to edit and project settings. click 'xr plugin management' and install xr plugin management system
+- once it's installed, you can select on the 'windows' and 'android' tab, openxr (let things install/restart if need be), then add the oculus touch controller profile. 
+- then, you can add a 'tracked pose driver' to your unity 
+
+we aren't done yet though, next you need to click window -> package manager -> the plus sign -> add package by name
+
+and the name is: com.unity.xr.interaction.toolkit then click install
+
+now remove the main camera and then add an xr origin (VR)
+
+add two game objects under XR origin, name them 'left hand' and 'right hand' then add the "XR Controller" module.
+
+Then you want to click on window and go to package manager, then samples under the xr interaction toolkit, and import the starter assets
+
+so you can now go in the file looker and inspector then click on the xr default left/right controller and drag them into the software itself. 
+
+go back to the left hand/right hand and click on the tiny slider icon on the 'xr controller' script and find xri default left/right controller
+
+click on XR origin and add a new 'input action manager' (if it isn't already there lol)
+
+then add a new action asset under the action asset list, add 'xr default input actions'
+
+press play to test
+
+now select both left hand and right hand, then right click, go to 3d, and select cube. then go to each cube and make the sacle 0.1
