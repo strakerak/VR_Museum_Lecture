@@ -9,9 +9,9 @@ we aren't done yet though, next you need to click window -> package manager -> t
 
 and the name is: com.unity.xr.interaction.toolkit then click install
 
-now remove the main camera and then add an xr origin (VR)
+now remove the main camera and then add an xr origin (VR) by typing it into the thing like the search
 
-add two game objects under XR origin, name them 'left hand' and 'right hand' then add the "XR Controller" module.
+add two game objects under XR origin, name them 'left hand' and 'right hand' then add the "XR Controller" module. (create empty)
 
 Then you want to click on window and go to package manager, then samples under the xr interaction toolkit, and import the starter assets
 
@@ -179,4 +179,53 @@ Now you ca play around and punch and whatever. Next we're going to do continuous
 ----------------------------------------------------
 
 PART THREE: MOTION AND MOVEMENT
-test this
+
+OKAY NOW WE ARE DOING MOVEMENT
+
+So the first thing you want to do is select your XR Origin. Add a component, and add a locomotion system component. Drag your XR Origin into that thing as the reference.
+
+What this does is get your movement request, it will ask to move the rig.
+
+Let's add two more components. First is continuous move provider (action based), and then a character controller. You can see all of the settings available, such as slope limit, etc.
+
+Maximum step height, stuff to go up. Leave everything as is, but reduce the radius to 0.2
+
+Drag locomotion system into the system on the continous term, and use gravity. Gravity is attempting move. But use immediately to avoid werid stuff.
+
+What is forward source? Do you want where it is looking or another direction?
+
+Move it is looking at, it will be more natural, so use main camera of the XR Origin as the forward source. 
+
+Go back to using reference. Let's use the left contoller to make movement. use reference for both. 
+
+XRI LeftHand Locomotion Move, and XRI RightHand Locomotion Move
+
+Next go back to samples, XR Toolkit, our version (2.5.3), Starter Assets, and XRI Default Input actions, and press lefthand locomotion.
+
+It is a Vector2 type, and the primary2D Axis is the lefthand controller. 
+
+But on the right, there is no binding. We can only omve with our left thumbstick, just leave it like that, you can change it how you want, use others as reference.
+
+Now lets press play.
+
+Uh oh! The player falls!
+
+To fix this, we can go to the character controller and set the y Value to like, 1. This will place it above the plane.
+
+But now we need to turn! Let's fix that..
+
+We have two ways to rotate in VR. Continuous turn or snap turn. Continuous is better imo because snap is ew.
+
+Now add a continuous turn provider action based.
+
+Then use reference, and add XRI LeftHand Locomotion Turn, and RightHand Locomotion Turn. The thumbsticks will do them for ya
+
+The turn speed is up to you. 
+
+But we have an issue, let's do some quick fix. Uncheck use reference on the left hand for the turn. Right hand will do it for ya ;D
+
+So we have another issue, let's press play and show the problem.
+
+The capsule won't move with the player, and only stays at the center of the rig even when I walk a little. Same goes for the height. How we fix this:
+
+Just add a "character controller driver" and the continuous move provider there. You can set a mean and max value but you don't need it. 
