@@ -26,3 +26,156 @@ then add a new action asset under the action asset list, add 'xr default input a
 press play to test
 
 now select both left hand and right hand, then right click, go to 3d, and select cube. then go to each cube and make the sacle 0.1
+
+------------ input and hand presence
+
+so the next step is to add hands and you can actually make your own hands but there are actually public hands from oculus
+
+remmber when i said they want to make the setup as easy as possible
+
+https://drive.google.com/file/d/10b39IekUdpBHlcTslZ-BlNRyH5uqPUe1/view there's the link. download that and drag it into your 
+unity. just drag it in and click 'import' on everything.
+
+talk about what it all contains, prefabs, etc.
+
+once it is important, let's go to Oculus and Prefabs, then the cubes, delete those cubes under the 'hands', and just
+drag the hands under the cubes. The cubes are under XR Rig by the way remembver that. 
+
+chck the hands out for the prefabs. and you can check the animator panel too. Windows->Animation->Animator
+
+select blend tree for all of the values and stuff. there are four animations lol. 
+
+we are going to use the input of the controller to update these to values. (Explain input get axis raw in this case)
+
+(Or other animations).
+
+You can change the color of the hand in the prefab access directly. 
+
+but if you click on the hands_geom, you can change the color in the scene. 
+
+Test it out to see if the hands follow around but oops you actually can't see the hands animate when you press buttons
+because it isn't set up so let's change that.
+
+now select a hand, and click add component, then we can create an "AnimateHandOnInput" so this will be a script
+
+yay time to write code.
+
+This will open a new VIsual Studio page and start working on a script. If you haven't written code, don't worry, we will
+give you the info :)
+
+First, under all of the imports, write using UnityEngine.InputSystem; //this will be for the input system of the controllers
+
+Then in the class, put:
+
+public InputActionProperty pinchAnimationAction; //this will create a variable we can use through the script with this name. marking it as public lets you modify stuff in the inspector. 
+
+so save the script then go back to unity and let it compile. 
+
+Now you can modify a whole bunch of stuff! Click the plus button, add bindings, double click on the bindings, and for the path click on XR Controller, XR Controller, right hand, then choose the specific button youw ant to listen to. 
+
+How about we use stuff that's already available! Click on 'use reference', then go to samples, xr interaction toolkit, our version, starter assets, and all the actions are there. XRI Default INput Actions! 
+
+Double click and take a look at the stuff. The map doesn't do anything, but you can organize it into categories. Tak ea look at
+right hand itneraction, it literally sets everything up and what type of button we want to use.
+
+You can click on the arrow next to it to determine what the button is too.
+
+Now check out the ActivateValue under XRI RightHand Interaction. The Activate ACtion is a button, the Activate Value is a value with a control type of axis. 
+
+I know this is a lot, but this will get simpler over time or not i don't know.
+
+The right hand is a trigger value.
+
+So now open up the entire XRI thing, and drag the Activate Value over into the reference. This will have it accessed now.
+
+Go back to the script!
+
+And in the update function: 
+
+float triggerValue = pinchAnimationAction.action.ReadValue<float>() //we are doing a value axis read. you can use bool (one or zero) to determine whether or not it is pressed, but we actually can check how much the button is pressed. 
+
+Debug.Log(triggerValue); // to get the value when you press and whatever. we'll test that out to show how cool debugging is.
+
+next we are going to add the Animator under the inputactionproperty part. 
+
+public Animator handAnimator; //this will be used in update
+
+-- go to the update function and put before Debug.Log:
+
+handAnimator.SetFloat("Trigger",triggerValue);
+
+then comment out the Debug.Log and boom check it out!
+
+now if you go back to the unity inspector you're going to see an 'animator' pop up on the script. You just drag that animator right above it into the box and boom, you have animation.
+
+we're going to do the hand grip now!
+
+now put inder the input action again and above the animator:
+
+public InputActionProperty gripAnimationAction;
+
+and under the animator in update:
+
+float gripValue = gripAnimationAction.action.ReadValue<float>();
+handAnimator.SetFloat("Grip",gripValue);
+
+
+Now go back to Unity and for this action we are going to add an already made action as well, so we will use reference again
+
+go to that XRI Interaction stuff, then click XRI RightHand Interaction and Select Value. Then click play. Boom. You have grips
+
+
+Now we need to do this for the left hand!
+
+Basically 'replicate'  it hahahaha. 
+
+SO go to the other hand, then add the script AnimateHandOnInput again.
+
+Use reference for both, add the LEFT HAND VERSION of each!
+
+Here is what the script should look like in the end:
+
+
+---
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class AnimateHandOnInput : MonoBehaviour
+{
+
+    public InputActionProperty pinchAnimationAction;
+    public InputActionProperty gripAnimationAction;
+
+    public Animator handAnimator; 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float triggerValue = pinchAnimationAction.action.ReadValue<float>();
+        handAnimator.SetFloat("Trigger", triggerValue);
+        //Debug.Log(triggerValue);
+
+        float gripValue = gripAnimationAction.action.ReadValue<float>();
+        handAnimator.SetFloat("Grip", gripValue);
+    }
+}
+
+
+----
+
+
+Now you ca play around and punch and whatever. Next we're going to do continuous movement and locomiotion :)
+
+----------------------------------------------------
+
+PART THREE: MOTION AND MOVEMENT
