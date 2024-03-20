@@ -230,3 +230,49 @@ The capsule won't move with the player, and only stays at the center of the rig 
 
 Just add a "character controller driver" and the continuous move provider there. You can set a mean and max value but you don't need it. 
 
+-----------------------------------------------------------
+Now it's time for interactables. I think that's it afterwards?
+
+okay first we are going to put in a table. we can make our own or we can use a custom file. but i want them to use wahtever fbx they want.
+
+then we are going to talk about interactable vs interactor.
+
+let's select our hands, and add 'XR direct interactor'
+
+then add a 'sphere collider' and set it to is trigger. this will let us interact within a certain radius. let the radius be 0.1
+
+now let's create the interactable. just a simple one.
+
+let's make another object, this bed, and change it to a tiny one. put it on the table. it can be any object you want. now you want to add a rigidbody so it can have physics added to it. add box colliders too.
+
+then add an 'xr simple interactable component'.
+
+see in the settings it needs a collider reference, but since we already have a collider on it, it will automatically just work, don't worry.
+
+keep that thing in mind when adding this for the future. 
+
+you can see in the interactable event list, what will happen if we hover or something. 
+
+so go to 'hover entered' and drag the game object from the heiarchy into the thing, then put 'meshrenderer.material'. then drag a custom color (we can make one if we haven't done it yet) as the material. 
+
+how make one as exit to set the material back to what it was. can be white. you'll see the bed color change. 
+
+now do one for select entered, and make a whoel new color.
+
+now duplicate it, move it a bit, and remove the simple interactable to grab interactable. you can change a few settings in it too, here you go:
+
+there are three movements.
+
+there is instantaenous, and kinematic, and velocity detection. duplicate each hahaha.
+
+instantaenous is based off of your hand, it directly uses stuff and not use phsyics to move. so you can push objects but it will be weird because no physics are present.
+
+if you use the kinematic one, it's a lot better because it is all physics based.
+
+finally, the velocity one is non kinematic, but the physics is there, it is the best option of the three.
+
+what if we wanted to grab it at a certain point since when you grab it, it will snap to one point.
+
+well here is how we do it, as a child of the gameobject, add a 'attach point'. it's an empty one, but you can name it whatever.
+
+so how i do it is i grab the object, then pause the scene. you can edit things in there. drag the bed around until you are at a happy point, then copy that transform, then paste it as the attach point. then put the attach point as the 'attach transform' int he grab interactable. or while 'still playing' like you don't have to pause it. 
