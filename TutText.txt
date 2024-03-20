@@ -229,3 +229,4 @@ So we have another issue, let's press play and show the problem.
 The capsule won't move with the player, and only stays at the center of the rig even when I walk a little. Same goes for the height. How we fix this:
 
 Just add a "character controller driver" and the continuous move provider there. You can set a mean and max value but you don't need it. 
+
